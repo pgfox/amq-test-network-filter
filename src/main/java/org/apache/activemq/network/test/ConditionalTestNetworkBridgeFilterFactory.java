@@ -1,4 +1,4 @@
-package org.apache.activemq.network;
+package org.apache.activemq.network.test;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,15 +11,18 @@ import org.apache.activemq.command.ConsumerInfo;
 import org.apache.activemq.command.Message;
 import org.apache.activemq.command.NetworkBridgeFilter;
 import org.apache.activemq.filter.MessageEvaluationContext;
+import org.apache.activemq.network.ConditionalNetworkBridgeFilterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConditionalTestNetworkBridgeFilterFactory extends ConditionalNetworkBridgeFilterFactory {
 
+   final static Logger LOG = LoggerFactory.getLogger(ConditionalTestNetworkBridgeFilterFactory.class);
+   
    boolean selectorAware = false;
 
    public NetworkBridgeFilter create(ConsumerInfo info, BrokerId[] remoteBrokerPath, int messageTTL, int consumerTTL) {
-      org.apache.activemq.network.ConditionalTestNetworkBridgeFilterFactory.ConditionalNetworkBridgeFilter filter = new org.apache.activemq.network.ConditionalTestNetworkBridgeFilterFactory.ConditionalNetworkBridgeFilter();
+      org.apache.activemq.network.test.ConditionalTestNetworkBridgeFilterFactory.ConditionalNetworkBridgeFilter filter = new org.apache.activemq.network.test.ConditionalTestNetworkBridgeFilterFactory.ConditionalNetworkBridgeFilter();
       filter.setNetworkBrokerId(remoteBrokerPath[0]);
       filter.setMessageTTL(messageTTL);
       filter.setConsumerTTL(consumerTTL);
@@ -28,6 +31,9 @@ public class ConditionalTestNetworkBridgeFilterFactory extends ConditionalNetwor
       filter.setRateDuration(getRateDuration());
       filter.setReplayDelay(getReplayDelay());
       filter.setSelectorAware(getSelectorAware());
+
+      LOG.warn("**** TEST ConditionalTestNetworkBridgeFilterFactory created for network bridge.");
+
       return filter;
    }
 
@@ -41,7 +47,7 @@ public class ConditionalTestNetworkBridgeFilterFactory extends ConditionalNetwor
 
    private static class ConditionalNetworkBridgeFilter extends NetworkBridgeFilter {
 
-      final static Logger LOG = LoggerFactory.getLogger(org.apache.activemq.network.ConditionalTestNetworkBridgeFilterFactory.ConditionalNetworkBridgeFilter.class);
+
       private int rateLimit;
       private int rateDuration = 1000;
       private boolean allowReplayWhenNoConsumers = true;

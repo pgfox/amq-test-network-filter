@@ -1,32 +1,51 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.acme</groupId>
-  <artifactId>amq-test-network-filter</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+   <groupId>com.acme</groupId>
+   <artifactId>amq-test-network-filter</artifactId>
+   <version>1.0-SNAPSHOT</version>
+   <packaging>bundle</packaging>
 
-  <name>amq-test-network-filter</name>
-  <url>http://maven.apache.org</url>
+   <name>amq-test-network-filter</name>
+   <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+   <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-broker</artifactId>
-      <version>5.11.0.redhat-630262</version>
-      <scope>provided</scope>
-    </dependency>
+   <dependencies>
+      <dependency>
+         <groupId>org.apache.activemq</groupId>
+         <artifactId>activemq-broker</artifactId>
+         <version>5.11.0.redhat-630262</version>
+         <scope>provided</scope>
+      </dependency>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>3.8.1</version>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
+
+   <!-- to generate the MANIFEST-FILE of the bundle -->
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <version>2.3.7</version>
+            <extensions>true</extensions>
+            <configuration>
+               <instructions>
+                  <Bundle-SymbolicName>amq-test-network-filter</Bundle-SymbolicName>
+                  <Fragment-Host>org.apache.activemq.activemq-osgi</Fragment-Host>
+               </instructions>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
 </project>
